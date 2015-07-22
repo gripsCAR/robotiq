@@ -35,8 +35,11 @@ class CModelActionController(object):
     self._server = SimpleActionServer(self._name, CModelCommandAction, execute_cb=self._execute_cb, auto_start = False)
     rospy.Subscriber('CModelRobotInput', inputMsg, self._status_cb)
     self._cmd_pub = rospy.Publisher('CModelRobotOutput', outputMsg)
+    working = True
     if activate and not self._ready():
-      self._activate()
+      working = self._activate()
+    if not working:
+      return
     self._server.start()
     rospy.loginfo(rospy.loginfo('%s: Started' % self._name))
 
