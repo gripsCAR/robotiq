@@ -37,6 +37,7 @@ class CModelActionController(object):
     self._cmd_pub = rospy.Publisher('CModelRobotOutput', outputMsg)
     working = True
     if activate and not self._ready():
+      rospy.sleep(2.0)
       working = self._activate()
     if not working:
       return
